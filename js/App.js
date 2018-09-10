@@ -4,8 +4,9 @@ var myHeaders = {
   'X-Auth-Token': '62cb0bb312dfe8d534639ecd7cfdd405',
   'Content-Type': 'application/json; charset=utf-8'
 };
+var prefix = "https://cors-anywhere.herokuapp.com/";
 
-fetch(baseUrl +'/board', { headers: myHeaders })
+fetch(prefix + baseUrl +'/board', { headers: myHeaders })
   .then(function(response) {
     return response.json();
   })

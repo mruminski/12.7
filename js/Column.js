@@ -1,4 +1,5 @@
 function Column(id, name) {
+  var self = this;
   this.id = id;
   this.name = name || 'No given name';
   this.element = generateTemplate("column-template", {
@@ -21,7 +22,7 @@ function Column(id, name) {
         data.append('name', cardName);
         data.append('bootcamp_kanban_column_id', self.id);
 
-        fetch(baseUrl +'/card/', {
+        fetch(prefix + baseUrl +'/card/', {
           method: 'POST',
           headers: myHeaders,
           body: data,
@@ -29,11 +30,10 @@ function Column(id, name) {
         .then(function(response) {
           return response.json();
         })
-        .then(function() {
+        .then(function(response) {
           var card = new Card(response.id, cardName);
           self.addCard(card);
         });
-        self.addCard(new Card(cardName));
       }
     });
 }

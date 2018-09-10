@@ -1,11 +1,31 @@
-function randomString() {
-  var chars = "0123456789abcdefghiklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXTZ".split();
-  var str = "",
-    i;
-  for (i = 0; i < 10; i++) {
-    str += chars[Math.floor(Math.random() * chars.length)];
-  }
-  return str;
+var baseUrl = 'https://kodilla.com/pl/bootcamp-api';
+var myHeaders = {
+  'X-Client-Id': '3458',
+  'X-Auth-Token': '62cb0bb312dfe8d534639ecd7cfdd405',
+  'Content-Type': 'application/json; charset=utf-8'
+};
+
+fetch(baseUrl +'/board', { headers: myHeaders })
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(response) {
+    setupColums(response.columns);
+  });
+
+function setupColums(columns) {
+  Array.prototype.forEach.call(columns, function(column) {
+    var col = new Column(column.id, column.name);
+    board.addColumn(col);
+    setupCards(col, column.cards);
+  });
+}
+
+function setupCards(col, cards) {
+  Array.prototype.forEach.call(cards, function(card) {
+    var cardEl = new Card(card.id, card.name);
+    col.addCard(cardEl);
+  })
 }
 
 function generateTemplate(name, data, basicElement) {

@@ -1,11 +1,10 @@
-function Card(description) {
+function Card(id, name) {
   var self = this;
-
-  this.id = randomString();
-  this.description = description;
+  this.id = id;
+  this.name = name || 'No name given'; 
   this.element = generateTemplate(
     "card-template",
-    { description: this.description },
+    { name: this.name },
     "li"
   );
 
@@ -21,6 +20,13 @@ function Card(description) {
 }
 Card.prototype = {
   removeCard: function() {
-    this.element.parentNode.removeChild(this.element);
-  }
+    var self = this;
+    fetch(baseUrl + '/card/' + self.id, { method: 'DELETE', headers: myHeaders })
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(response) {
+        self.element.parentNode.removeChild(this.element);
+      })
+   }
 };

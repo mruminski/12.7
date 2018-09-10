@@ -37,17 +37,3 @@ function generateTemplate(name, data, basicElement) {
 
   return element;
 }
-
-var todoColumn = new Column("Do zrobienia");
-var doingColumn = new Column("W trakcie");
-var doneColumn = new Column("Skończone");
-
-board.addColumn(todoColumn);
-board.addColumn(doingColumn);
-board.addColumn(doneColumn);
-
-var card1 = new Card("Nowe zadanie");
-var card2 = new Card("stworzyc tablice kanban");
-
-todoColumn.addCard(card1);
-doingColumn.addCard(card2);

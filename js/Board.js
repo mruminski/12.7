@@ -11,8 +11,22 @@ document
   .querySelector("#board .create-column")
   .addEventListener("click", function() {
     var name = prompt("Enter a column name");
-    var column = new Column(name);
-    board.addColumn(column);
+    var data = FormData();
+
+    data.append('name',name);
+
+    fetch(baseUrl +'/column', {
+      method: 'POST',
+      headers: myHeaders,
+      body: data,
+    })
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(response) {
+      var col = new column(response.id, name);
+      board.addColumn(col);
+    });
   });
 
 function initSortable(id) {

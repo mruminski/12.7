@@ -14,7 +14,7 @@ fetch(baseUrl +'/board', { headers: myHeaders })
   });
 
 function setupColums(columns) {
-  Array.prototype.forEach.call(columns, function(column) {
+  columns.forEach(function(column) {
     var col = new Column(column.id, column.name);
     board.addColumn(col);
     setupCards(col, column.cards);
@@ -22,7 +22,7 @@ function setupColums(columns) {
 }
 
 function setupCards(col, cards) {
-  Array.prototype.forEach.call(cards, function(card) {
+  cards.forEach(function(card) {
     var cardEl = new Card(card.id, card.name);
     col.addCard(cardEl);
   })

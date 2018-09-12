@@ -1,11 +1,32 @@
-function randomString() {
-  var chars = "0123456789abcdefghiklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXTZ".split();
-  var str = "",
-    i;
-  for (i = 0; i < 10; i++) {
-    str += chars[Math.floor(Math.random() * chars.length)];
-  }
-  return str;
+var baseUrl = 'https://kodilla.com/pl/bootcamp-api';
+var myHeaders = {
+  'X-Client-Id': '3458',
+  'X-Auth-Token': '62cb0bb312dfe8d534639ecd7cfdd405',
+  'Content-Type': 'application/json; charset=utf-8'
+};
+var prefix = "https://cors-anywhere.herokuapp.com/";
+
+fetch(prefix + baseUrl +'/board', { headers: myHeaders })
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(response) {
+    setupColums(response.columns);
+  });
+
+function setupColums(columns) {
+  columns.forEach(function(column) {
+    var col = new Column(column.id, column.name);
+    board.addColumn(col);
+    setupCards(col, column.cards);
+  });
+}
+
+function setupCards(col, cards) {
+  cards.forEach(function(card) {
+    var cardEl = new Card(card.id, card.name);
+    col.addCard(cardEl);
+  })
 }
 
 function generateTemplate(name, data, basicElement) {
@@ -17,17 +38,3 @@ function generateTemplate(name, data, basicElement) {
 
   return element;
 }
-
-var todoColumn = new Column("Do zrobienia");
-var doingColumn = new Column("W trakcie");
-var doneColumn = new Column("Skończone");
-
-board.addColumn(todoColumn);
-board.addColumn(doingColumn);
-board.addColumn(doneColumn);
-
-var card1 = new Card("Nowe zadanie");
-var card2 = new Card("stworzyc tablice kanban");
-
-todoColumn.addCard(card1);
-doingColumn.addCard(card2);
